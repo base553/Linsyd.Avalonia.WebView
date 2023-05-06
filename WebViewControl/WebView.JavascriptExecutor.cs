@@ -14,7 +14,7 @@ using Xilium.CefGlue.Common.Events;
 
 namespace WebViewControl {
 
-    partial class WebView {
+    public partial class WebView {
 
         [DataContract]
         internal class JsError {

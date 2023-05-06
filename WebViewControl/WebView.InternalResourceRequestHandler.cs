@@ -3,7 +3,7 @@ using Xilium.CefGlue;
 
 namespace WebViewControl {
 
-    partial class WebView {
+    public partial class WebView {
 
         private class InternalResourceRequestHandler : CefResourceRequestHandler {
 

@@ -2,7 +2,7 @@
 
 namespace WebViewControl {
 
-    partial class ChromiumBrowser : AvaloniaCefBrowser {
+    public partial class ChromiumBrowser : AvaloniaCefBrowser {
 
         public new void CreateBrowser(int width, int height) {
             if (IsBrowserInitialized) {

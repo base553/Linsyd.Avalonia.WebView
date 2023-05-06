@@ -1,5 +1,9 @@
+using System;
 using System.ComponentModel;
 using System.Reactive;
+using Avalonia;
+using Avalonia.Data;
+using Avalonia.Reactive;
 using ReactiveUI;
 using WebViewControl;
 
@@ -7,10 +11,15 @@ namespace SampleWebView.Avalonia {
     class MainWindowViewModel : ReactiveObject {
 
         private string address;
+
         private string currentAddress;
 
+
+
         public MainWindowViewModel(WebView webview) {
-            Address = CurrentAddress = "http://www.google.com/";
+
+            webview.TabAtOldOpened += Webview_TabAtOldOpened;
+            Address = webview.Address = CurrentAddress = "https://channels.weixin.qq.com/";
 
             NavigateCommand = ReactiveCommand.Create(() => {
                 CurrentAddress = Address;
@@ -47,11 +56,11 @@ namespace SampleWebView.Avalonia {
             DeleteCommand = ReactiveCommand.Create(() => {
                 webview.EditCommands.Delete();
             });
-            
+
             BackCommand = ReactiveCommand.Create(() => {
                 webview.GoBack();
             });
-            
+
             ForwardCommand = ReactiveCommand.Create(() => {
                 webview.GoForward();
             });
@@ -59,6 +68,9 @@ namespace SampleWebView.Avalonia {
             PropertyChanged += OnPropertyChanged;
         }
 
+        private void Webview_TabAtOldOpened(string OldUrl, string NewUrl) {
+            Address = NewUrl;
+        }
         private void OnPropertyChanged(object sender, PropertyChangedEventArgs e) {
             if (e.PropertyName == nameof(CurrentAddress)) {
                 Address = CurrentAddress;
@@ -94,7 +106,7 @@ namespace SampleWebView.Avalonia {
         public ReactiveCommand<Unit, Unit> DeleteCommand { get; }
 
         public ReactiveCommand<Unit, Unit> BackCommand { get; }
-        
+
         public ReactiveCommand<Unit, Unit> ForwardCommand { get; }
     }
 }

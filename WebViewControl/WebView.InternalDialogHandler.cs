@@ -3,8 +3,8 @@ using Xilium.CefGlue.Common.Handlers;
 
 namespace WebViewControl {
 
-    partial class WebView {
-        private class InternalDialogHandler : DialogHandler {
+    public partial class WebView {
+        public class InternalDialogHandler : DialogHandler {
 
             private WebView OwnerWebView { get; }
 

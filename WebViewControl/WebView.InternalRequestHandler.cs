@@ -5,7 +5,7 @@ using Xilium.CefGlue.Common.Handlers;
 
 namespace WebViewControl {
 
-    partial class WebView {
+    public partial class WebView {
 
         private class InternalRequestHandler : RequestHandler {
 

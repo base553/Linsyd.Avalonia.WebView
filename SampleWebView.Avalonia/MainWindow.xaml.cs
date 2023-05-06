@@ -10,8 +10,9 @@ namespace SampleWebView.Avalonia {
             WebView.Settings.OsrEnabled = false;
             WebView.Settings.LogFile = "ceflog.txt";
             AvaloniaXamlLoader.Load(this);
-
-            DataContext = new MainWindowViewModel(this.FindControl<WebView>("webview"));
+            var context = this.FindControl<Decorator>("webview");
+            context.Child = new WebView(false, true);
+            DataContext = new MainWindowViewModel((WebView)context.Child);
         }
     }
 }

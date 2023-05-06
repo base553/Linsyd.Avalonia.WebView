@@ -1,35 +1,59 @@
-﻿<Window xmlns="https://github.com/avaloniaui" MinWidth="500" MinHeight="300"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:webview="clr-namespace:WebViewControl;assembly=WebViewControl.Avalonia"
-        x:Class="SampleWebView.Avalonia.MainWindow"
-        Title="Sample WebView"
-        ExtendClientAreaToDecorationsHint="True"
-        ExtendClientAreaChromeHints="PreferSystemChrome"
-        TransparencyLevelHint="AcrylicBlur"
-        Background="Transparent">
+﻿<Window
+    x:Class="SampleWebView.Avalonia.MainWindow"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:webview="clr-namespace:WebViewControl;assembly=WebViewControl.Avalonia"
+    Title="Sample WebView"
+    MinWidth="500"
+    MinHeight="300"
+    Background="Transparent"
+    ExtendClientAreaChromeHints="PreferSystemChrome"
+    ExtendClientAreaToDecorationsHint="True"
+    TransparencyLevelHint="AcrylicBlur">
 
     <NativeMenu.Menu>
         <NativeMenu>
             <NativeMenuItem Header="Edit">
                 <NativeMenuItem.Menu>
                     <NativeMenu>
-                        <NativeMenuItem Header="Undo" Command="{Binding UndoCommand}" Gesture="CMD+Z" />
-                        <NativeMenuItem Header="Redo" Command="{Binding RedoCommand}" Gesture="Shift+CMD+Z" />
-                        <NativeMenuItemSeperator/>
-                        <NativeMenuItem Header="Cut" Command="{Binding CutCommand}" Gesture="CMD+X" />
-                        <NativeMenuItem Header="Copy" Command="{Binding CopyCommand}" Gesture="CMD+C" />
-                        <NativeMenuItem Header="Paste" Command="{Binding PasteCommand}" Gesture="CMD+V" />
-                        <NativeMenuItem Header="Delete" Command="{Binding DeleteCommand}" Gesture="CMD+Back" />
-                        <NativeMenuItemSeperator/>
-                        <NativeMenuItem Header="Select All" Command="{Binding SelectAllCommand}" Gesture="CMD+A" />
+                        <NativeMenuItem
+                            Command="{Binding UndoCommand}"
+                            Gesture="CMD+Z"
+                            Header="Undo" />
+                        <NativeMenuItem
+                            Command="{Binding RedoCommand}"
+                            Gesture="Shift+CMD+Z"
+                            Header="Redo" />
+                        <NativeMenuItemSeperator />
+                        <NativeMenuItem
+                            Command="{Binding CutCommand}"
+                            Gesture="CMD+X"
+                            Header="Cut" />
+                        <NativeMenuItem
+                            Command="{Binding CopyCommand}"
+                            Gesture="CMD+C"
+                            Header="Copy" />
+                        <NativeMenuItem
+                            Command="{Binding PasteCommand}"
+                            Gesture="CMD+V"
+                            Header="Paste" />
+                        <NativeMenuItem
+                            Command="{Binding DeleteCommand}"
+                            Gesture="CMD+Back"
+                            Header="Delete" />
+                        <NativeMenuItemSeperator />
+                        <NativeMenuItem
+                            Command="{Binding SelectAllCommand}"
+                            Gesture="CMD+A"
+                            Header="Select All" />
                     </NativeMenu>
                 </NativeMenuItem.Menu>
             </NativeMenuItem>
             <NativeMenuItem Header="Navigate">
                 <NativeMenuItem.Menu>
                     <NativeMenu>
-                        <NativeMenuItem Header="Back" Command="{Binding BackCommand}" />
-                        <NativeMenuItem Header="Forward" Command="{Binding ForwardCommand}" />
+                        <NativeMenuItem Command="{Binding BackCommand}" Header="Back" />
+                        <NativeMenuItem Command="{Binding ForwardCommand}" Header="Forward" />
                     </NativeMenu>
                 </NativeMenuItem.Menu>
             </NativeMenuItem>
@@ -39,25 +63,34 @@
     <Panel>
         <ExperimentalAcrylicBorder IsHitTestVisible="False">
             <ExperimentalAcrylicBorder.Material>
-                <ExperimentalAcrylicMaterial BackgroundSource="Digger"
-                                             TintColor="{DynamicResource SystemAltHighColor}"
-                                             TintOpacity="1"
-                                             FallbackColor="Black"
-                                             MaterialOpacity="0.25" />
+                <ExperimentalAcrylicMaterial
+                    BackgroundSource="Digger"
+                    FallbackColor="Black"
+                    MaterialOpacity="0.25"
+                    TintColor="{DynamicResource SystemAltHighColor}"
+                    TintOpacity="1" />
             </ExperimentalAcrylicBorder.Material>
         </ExperimentalAcrylicBorder>
         <DockPanel>
 
-            <DockPanel DockPanel.Dock="Top" Margin="0 0 400 0">
-                <Button DockPanel.Dock="Right" Background="Transparent" Command="{Binding ShowDevToolsCommand}">Show DevTools</Button>
-                <TextBox Background="Transparent" Text="{Binding Address}" Margin="80 0 0 0">
+            <DockPanel Margin="0,0,400,0" DockPanel.Dock="Top">
+                <Button
+                    Background="Transparent"
+                    Command="{Binding ShowDevToolsCommand}"
+                    DockPanel.Dock="Right">
+                    Show DevTools
+                </Button>
+                <TextBox
+                    Margin="80,0,0,0"
+                    Background="Transparent"
+                    Text="{Binding Address}">
                     <TextBox.KeyBindings>
-                        <KeyBinding Gesture="Enter" Command="{Binding NavigateCommand}" />
+                        <KeyBinding Command="{Binding NavigateCommand}" Gesture="Enter" />
                     </TextBox.KeyBindings>
                 </TextBox>
             </DockPanel>
 
-            <webview:WebView x:Name="webview" Address="{Binding CurrentAddress}" />
+            <Decorator Name="webview" />
         </DockPanel>
     </Panel>
 </Window>

@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace WebViewControl {
 
-    partial class WebView {
+    public partial class WebView {
 
         /// <summary>
         /// Registers an object with the specified name in the window context of the browser

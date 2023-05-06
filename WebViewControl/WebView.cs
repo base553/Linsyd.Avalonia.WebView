@@ -19,6 +19,7 @@ namespace WebViewControl {
     public delegate void DownloadProgressChangedEventHandler(string resourcePath, long receivedBytes, long totalBytes);
     public delegate void DownloadStatusChangedEventHandler(string resourcePath);
     public delegate void JavascriptContextCreatedEventHandler(string frameName);
+    public delegate void TabAtOldOpenEventHandler(string OldUrl, string NewUrl);
     public delegate void UnhandledAsyncExceptionEventHandler(UnhandledAsyncExceptionEventArgs eventArgs);
     public delegate void FilesDraggingEventHandler(string[] fileNames);
     public delegate void TextDraggingEventHandler(string textContent);
@@ -69,6 +70,8 @@ namespace WebViewControl {
         public event DownloadStatusChangedEventHandler DownloadCompleted;
         public event DownloadStatusChangedEventHandler DownloadCancelled;
         public event JavascriptContextCreatedEventHandler JavascriptContextCreated;
+
+        public event TabAtOldOpenEventHandler TabAtOldOpened;
         public event Action TitleChanged;
         public event UnhandledAsyncExceptionEventHandler UnhandledAsyncException;
         public event Action</*url*/string> PopupOpening;
@@ -99,7 +102,7 @@ namespace WebViewControl {
 
         /// <param name="useSharedDomain">Shared domains means that the webview default domain will always be the same. When <paramref ref="useSharedDomain"/> is false a
         /// unique domain is used for every webview.</param>
-        internal WebView(bool useSharedDomain) {
+        public WebView(bool useSharedDomain, bool OpenNewTab = false) {
             if (IsInDesignMode) {
                 return;
             }
@@ -113,11 +116,11 @@ namespace WebViewControl {
 
             DefaultLocalUrl = UrlHelper.DefaultLocalUrl.WithDomain(CurrentDomainId);
 
-            Initialize();
+            Initialize(OpenNewTab);
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]
-        private void Initialize() {
+        private void Initialize(bool openNewTab) {
             WebViewLoader.Initialize(Settings);
 
             chromium = new ChromiumBrowser();
@@ -131,7 +134,11 @@ namespace WebViewControl {
             chromium.UnhandledException += (o, e) => ForwardUnhandledAsyncException(e.Exception);
 
             chromium.RequestHandler = new InternalRequestHandler(this);
-            chromium.LifeSpanHandler = new InternalLifeSpanHandler(this);
+            if (openNewTab) {
+                chromium.LifeSpanHandler = new NewLifeSpanHandler(this);
+            } else {
+                chromium.LifeSpanHandler = new InternalLifeSpanHandler(this);
+            }
             chromium.ContextMenuHandler = new InternalContextMenuHandler(this);
             chromium.DialogHandler = new InternalDialogHandler(this);
             chromium.DownloadHandler = new InternalDownloadHandler(this);
@@ -204,7 +211,7 @@ namespace WebViewControl {
 
                 // dispose the js executors before the browser to prevent (the browser) from throwing cancellation exceptions
                 DisposeJavascriptExecutors();
-                
+
                 foreach (var disposable in disposables) {
                     disposable?.Dispose();
                 }

@@ -40,6 +40,7 @@ namespace WebViewControl {
             }
         }
 
+
         protected override void OnGotFocus(GotFocusEventArgs e) {
             if (!e.Handled) {
                 e.Handled = true;

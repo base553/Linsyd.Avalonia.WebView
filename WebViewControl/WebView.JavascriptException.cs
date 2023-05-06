@@ -5,7 +5,7 @@ using Xilium.CefGlue.Common.Events;
 
 namespace WebViewControl {
 
-    partial class WebView {
+    public partial class WebView {
 
         public class JavascriptException : Exception {
 

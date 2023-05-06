@@ -3,7 +3,7 @@ using Xilium.CefGlue;
 
 namespace WebViewControl {
 
-    internal static class WebViewExtensions {
+    public static class WebViewExtensions {
 
         public static string[] GetFrameNames(this WebView webview) {
             return webview.GetCefBrowser()?.GetFrameNames().Where(n => !webview.IsMainFrame(n)).ToArray() ?? new string[0];
