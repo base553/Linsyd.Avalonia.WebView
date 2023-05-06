@@ -35,7 +35,7 @@ namespace WebViewControl {
 
                 try {
 
-                    OwnerWebView.TabAtOldOpened(frame.Url, targetUrl);
+                    OwnerWebView.TabAtOldOpened?.Invoke(frame.Url, targetUrl);
                     OwnerWebView.LoadUrl(targetUrl, MainFrameName);
                 } catch {
                     return false;

@@ -19,7 +19,7 @@ namespace WebViewControl {
     public delegate void DownloadProgressChangedEventHandler(string resourcePath, long receivedBytes, long totalBytes);
     public delegate void DownloadStatusChangedEventHandler(string resourcePath);
     public delegate void JavascriptContextCreatedEventHandler(string frameName);
-    public delegate void TabAtOldOpenEventHandler(string OldUrl, string NewUrl);
+    public delegate void TabAtOldOpenEventHandler(string oldUrl, string newUrl);
     public delegate void UnhandledAsyncExceptionEventHandler(UnhandledAsyncExceptionEventArgs eventArgs);
     public delegate void FilesDraggingEventHandler(string[] fileNames);
     public delegate void TextDraggingEventHandler(string textContent);
@@ -102,7 +102,7 @@ namespace WebViewControl {
 
         /// <param name="useSharedDomain">Shared domains means that the webview default domain will always be the same. When <paramref ref="useSharedDomain"/> is false a
         /// unique domain is used for every webview.</param>
-        public WebView(bool useSharedDomain, bool OpenNewTab = false) {
+        public WebView(bool useSharedDomain, bool openNewTab = false) {
             if (IsInDesignMode) {
                 return;
             }
@@ -116,7 +116,7 @@ namespace WebViewControl {
 
             DefaultLocalUrl = UrlHelper.DefaultLocalUrl.WithDomain(CurrentDomainId);
 
-            Initialize(OpenNewTab);
+            Initialize(openNewTab);
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]
